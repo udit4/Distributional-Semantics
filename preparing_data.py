@@ -13,6 +13,7 @@ class prepare:
     #removing pos-tags from the brown corpus
     #
     def clean_pos_tag_from_brown_corpus_data(self, data):
+        ''' this substitution is for this particular case only '''
         data = re.sub(r'\/.+?\s', ' ', data)
         data = re.sub(r'\s+', ' ', data)
         return data
@@ -26,8 +27,7 @@ class prepare:
             data = f.read()
             data = self.clean_pos_tag_from_brown_corpus_data(data)
             f.close()
-            complete_data+=' {}'.format(data)
-        complete_data = complete_data.strip()
+            complete_data = data + complete_data
         return complete_data
     #
     #cleaning data from abusive tweets
@@ -37,7 +37,7 @@ class prepare:
             tweets[i] = re.sub(r'\n|\"|\!', ' ', tweets[i])
             tweets[i] = re.sub(r'RT \@.+?\:', ' ', tweets[i])
             tweets[i] = re.sub(r'\@.+\:', ' ', tweets[i])
-            tweets[i] = re.sub(r'')
+            #tweets[i] = re.sub(r'')
             tweets[i] = re.sub(r'\s+', ' ', tweets[i])
         return tweets
     #
@@ -48,8 +48,3 @@ class prepare:
         tweets = self.clean_abusive_tweets_data(list(df['tweet']))
         print(len(tweets))
         return
-
-
-
-obj = prepare()
-print(obj.data_from_abusive_tweets())
